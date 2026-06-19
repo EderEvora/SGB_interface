@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Logs MongoDB{% endblock %}
+{% block page_title %}Logs MongoDB{% endblock %}
+
+{% block content %}
+<div class="log-stats">
+  <div class="log-stat">
+    <strong>{{ total_transacoes }}</strong>
+    Transações registadas
+  </div>
+  <div class="log-stat">
+    <strong>{{ total_auditoria }}</strong>
+    Eventos de auditoria
+  </div>
+</div>
+
+<div class="log-tabs">
+  <a href="{{ url_for('logs', colecao='transacoes') }}"
+     class="log-tab {% if colecao == 'transacoes' %}active{% endif %}">
+    Transações
+  </a>
+  <a href="{{ url_for('logs', colecao='auditoria') }}"
+     class="log-tab {% if colecao == 'auditoria' %}active{% endif %}">
+    Auditoria
+  </a>
+</div>
+
+<div class="table-wrapper">
+  {% if documentos %}
+    {% for doc in documentos %}
+    <div class="log-entry">
+      <span class="log-ts">{{ doc.timestamp }}</span>
+      <span class="log-op">{{ doc.operacao }}</span>
+      <span class="log-data">{{ doc.dados }}</span>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-text">Nenhum registo na coleção <strong>{{ colecao }}</strong> ainda.</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

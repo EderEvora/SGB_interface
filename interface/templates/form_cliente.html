@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ acao }} Cliente{% endblock %}
+{% block page_title %}{{ acao }} Cliente{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <form method="POST">
+    <div class="form-group">
+      <label for="nome">Nome completo</label>
+      <input type="text" id="nome" name="nome" placeholder="Ex: João Silva"
+             value="{{ cliente[1] if cliente else '' }}" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Ex: joao@email.com"
+             value="{{ cliente[2] if cliente else '' }}" required>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{ url_for('clientes') }}" class="btn btn-outline">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

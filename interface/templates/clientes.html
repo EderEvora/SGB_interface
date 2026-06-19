@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Clientes{% endblock %}
+{% block page_title %}Clientes{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <div class="section-title">Lista de Clientes</div>
+  <a href="{{ url_for('cliente_novo') }}" class="btn btn-primary">+ Novo Cliente</a>
+</div>
+
+<div class="table-wrapper">
+  {% if clientes %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in clientes %}
+      <tr>
+        <td><span class="badge badge-blue">#{{ c[0] }}</span></td>
+        <td>{{ c[1] }}</td>
+        <td>{{ c[2] }}</td>
+        <td>
+          <div class="td-actions">
+            <a href="{{ url_for('cliente_editar', id=c[0]) }}" class="btn btn-outline btn-sm">Editar</a>
+            <a href="{{ url_for('cliente_eliminar', id=c[0]) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Eliminar este cliente?')">Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">👤</div>
+    <div class="empty-text">Nenhum cliente registado. <a href="{{ url_for('cliente_novo') }}">Adicionar agora</a></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

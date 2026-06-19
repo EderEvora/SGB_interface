@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Nova Conta{% endblock %}
+{% block page_title %}Nova Conta{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <form method="POST">
+    <div class="form-group">
+      <label for="cliente_id">Cliente</label>
+      <select id="cliente_id" name="cliente_id" required>
+        <option value="">Selecionar cliente...</option>
+        {% for cl in clientes %}
+        <option value="{{ cl[0] }}">{{ cl[1] }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="tipo">Tipo de Conta</label>
+      <select id="tipo" name="tipo" required>
+        <option value="">Selecionar tipo...</option>
+        <option value="Corrente">Corrente</option>
+        <option value="Poupança">Poupança</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="saldo">Saldo Inicial (CVE)</label>
+      <input type="number" id="saldo" name="saldo" min="0" step="0.01" placeholder="0.00" value="0">
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Criar Conta</button>
+      <a href="{{ url_for('contas') }}" class="btn btn-outline">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

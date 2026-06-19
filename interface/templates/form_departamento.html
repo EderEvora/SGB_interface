@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ acao }} Departamento{% endblock %}
+{% block page_title %}{{ acao }} Departamento{% endblock %}
+
+{% block content %}
+<div class="form-card">
+  <form method="POST">
+    <div class="form-group">
+      <label for="nome">Nome do Departamento</label>
+      <input type="text" id="nome" name="nome" placeholder="Ex: Recursos Humanos"
+             value="{{ departamento[1] if departamento else '' }}" required>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <a href="{{ url_for('departamentos') }}" class="btn btn-outline">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

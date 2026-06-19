@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-label">Clientes</div>
+    <div class="card-value">{{ total_clientes }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Colaboradores</div>
+    <div class="card-value">{{ total_colaboradores }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Departamentos</div>
+    <div class="card-value">{{ total_departamentos }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Contas Abertas</div>
+    <div class="card-value accent">{{ total_contas }}</div>
+  </div>
+  <div class="card">
+    <div class="card-label">Saldo Total (CVE)</div>
+    <div class="card-value small">{{ "{:,.2f}".format(total_saldo) }}</div>
+  </div>
+</div>
+
+<div class="section-header">
+  <div class="section-title">Últimas Transações</div>
+  <a href="{{ url_for('logs') }}" class="btn btn-outline btn-sm">Ver todos os logs</a>
+</div>
+
+<div class="table-wrapper">
+  {% if logs %}
+    {% for log in logs %}
+    <div class="log-entry">
+      <span class="log-ts">{{ log.timestamp }}</span>
+      <span class="log-op">{{ log.operacao }}</span>
+      <span class="log-data">{{ log.dados }}</span>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty">
+      <div class="empty-icon">📋</div>
+      <div class="empty-text">Nenhuma transação registada ainda.</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Departamentos{% endblock %}
+{% block page_title %}Departamentos{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <div class="section-title">Lista de Departamentos</div>
+  <a href="{{ url_for('departamento_novo') }}" class="btn btn-primary">+ Novo Departamento</a>
+</div>
+
+<div class="table-wrapper">
+  {% if departamentos %}
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+      {% for d in departamentos %}
+      <tr>
+        <td><span class="badge badge-blue">#{{ d[0] }}</span></td>
+        <td>{{ d[1] }}</td>
+        <td>
+          <div class="td-actions">
+            <a href="{{ url_for('departamento_editar', id=d[0]) }}" class="btn btn-outline btn-sm">Editar</a>
+            <a href="{{ url_for('departamento_eliminar', id=d[0]) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Eliminar este departamento?')">Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">🏢</div>
+    <div class="empty-text">Nenhum departamento registado. <a href="{{ url_for('departamento_novo') }}">Adicionar agora</a></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

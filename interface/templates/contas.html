@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Contas{% endblock %}
+{% block page_title %}Contas{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <div class="section-title">Lista de Contas</div>
+  <a href="{{ url_for('conta_nova') }}" class="btn btn-primary">+ Nova Conta</a>
+</div>
+
+<div class="table-wrapper">
+  {% if contas %}
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Cliente</th><th>Tipo</th><th>Saldo (CVE)</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+      {% for c in contas %}
+      <tr>
+        <td><span class="badge badge-blue">#{{ c[0] }}</span></td>
+        <td>{{ c[1] }}</td>
+        <td>
+          <span class="badge {% if c[2]|lower == 'poupança' %}badge-green{% else %}badge-orange{% endif %}">
+            {{ c[2] }}
+          </span>
+        </td>
+        <td><span class="saldo-value">{{ "{:,.2f}".format(c[3]|float) }}</span></td>
+        <td>
+          <div class="td-actions">
+            <a href="{{ url_for('conta_depositar', id=c[0]) }}" class="btn btn-success btn-sm">Depositar</a>
+            <a href="{{ url_for('conta_levantar', id=c[0]) }}" class="btn btn-warning btn-sm">Levantar</a>
+            <a href="{{ url_for('conta_eliminar', id=c[0]) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Eliminar esta conta?')">Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">💳</div>
+    <div class="empty-text">Nenhuma conta registada. <a href="{{ url_for('conta_nova') }}">Criar agora</a></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

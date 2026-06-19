@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Colaboradores{% endblock %}
+{% block page_title %}Colaboradores{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <div class="section-title">Lista de Colaboradores</div>
+  <a href="{{ url_for('colaborador_novo') }}" class="btn btn-primary">+ Novo Colaborador</a>
+</div>
+
+<div class="table-wrapper">
+  {% if colaboradores %}
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Nome</th><th>Email</th><th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for c in colaboradores %}
+      <tr>
+        <td><span class="badge badge-blue">#{{ c[0] }}</span></td>
+        <td>{{ c[1] }}</td>
+        <td>{{ c[2] }}</td>
+        <td>
+          <div class="td-actions">
+            <a href="{{ url_for('colaborador_editar', id=c[0]) }}" class="btn btn-outline btn-sm">Editar</a>
+            <a href="{{ url_for('colaborador_eliminar', id=c[0]) }}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Eliminar este colaborador?')">Eliminar</a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="empty">
+    <div class="empty-icon">👥</div>
+    <div class="empty-text">Nenhum colaborador registado. <a href="{{ url_for('colaborador_novo') }}">Adicionar agora</a></div>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
