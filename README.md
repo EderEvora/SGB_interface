@@ -44,8 +44,7 @@ SGB_interface/
 ├── interface/
 │   ├── app.py              # Rotas Flask (lógica de aplicação)
 │   ├── db.py                # Acesso a MySQL e MongoDB
-│   ├── .env                 # Credenciais (NÃO versionar)
-│   ├── .env.example          # Modelo de configuração
+│   ├── .env                 # Credenciais 
 │   ├── static/css/style.css
 │   └── templates/            # HTML (Jinja2)
 ├── requirements.txt
