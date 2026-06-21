@@ -37,6 +37,10 @@
         <span class="nav-icon">💳</span> Contas
       </a>
       <div class="nav-section">Sistema</div>
+      <a href="{{ url_for('notificacoes') }}" class="nav-item {% if 'notificac' in request.endpoint %}active{% endif %}">
+        <span class="nav-icon">🔔</span> Notificações
+        {% if notificacoes_nao_lidas %}<span class="nav-badge">{{ notificacoes_nao_lidas }}</span>{% endif %}
+      </a>
       <a href="{{ url_for('logs') }}" class="nav-item {% if request.endpoint == 'logs' %}active{% endif %}">
         <span class="nav-icon">📋</span> Logs MongoDB
       </a>
@@ -51,6 +55,10 @@
   <main class="main">
     <div class="topbar">
       <h1 class="page-title">{% block page_title %}{% endblock %}</h1>
+      <a href="{{ url_for('notificacoes') }}" class="topbar-bell" title="Notificações">
+        🔔
+        {% if notificacoes_nao_lidas %}<span class="bell-badge">{{ notificacoes_nao_lidas }}</span>{% endif %}
+      </a>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}

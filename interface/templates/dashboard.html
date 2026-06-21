@@ -47,4 +47,36 @@
     </div>
   {% endif %}
 </div>
+
+<div class="section-header" style="margin-top: 28px;">
+  <div class="section-title">Notificações Recentes</div>
+  <a href="{{ url_for('notificacoes') }}" class="btn btn-outline btn-sm">Ver todas as notificações</a>
+</div>
+
+<div class="table-wrapper">
+  {% if ultimas_notificacoes %}
+    {% for n in ultimas_notificacoes %}
+    <div class="notif-entry notif-{{ n.nivel }} {% if not n.lida %}notif-unread{% endif %}">
+      <div class="notif-icon">
+        {% if n.nivel == 'critico' %}🔴
+        {% elif n.nivel == 'aviso' %}🟠
+        {% else %}🔵
+        {% endif %}
+      </div>
+      <div class="notif-body">
+        <div class="notif-header">
+          <span class="notif-title">{{ n.titulo }}</span>
+          <span class="notif-ts">{{ n.timestamp_fmt }}</span>
+        </div>
+        <div class="notif-message">{{ n.mensagem }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty">
+      <div class="empty-icon">🔔</div>
+      <div class="empty-text">Nenhuma notificação ainda.</div>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}

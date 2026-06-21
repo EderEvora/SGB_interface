@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Notificações{% endblock %}
+{% block page_title %}Notificações{% endblock %}
+
+{% block content %}
+<div class="section-header">
+  <div class="section-title">Notificações do Sistema</div>
+  <div class="td-actions">
+    <a href="{{ url_for('notificacoes_marcar_todas') }}" class="btn btn-outline btn-sm">Marcar todas como lidas</a>
+  </div>
+</div>
+
+<div class="log-tabs">
+  <a href="{{ url_for('notificacoes', filtro='todas') }}"
+     class="log-tab {% if filtro == 'todas' %}active{% endif %}">
+    Todas
+  </a>
+  <a href="{{ url_for('notificacoes', filtro='nao_lidas') }}"
+     class="log-tab {% if filtro == 'nao_lidas' %}active{% endif %}">
+    Não lidas {% if total_nao_lidas %}({{ total_nao_lidas }}){% endif %}
+  </a>
+</div>
+
+<div class="table-wrapper">
+  {% if notificacoes %}
+    {% for n in notificacoes %}
+    <div class="notif-entry notif-{{ n.nivel }} {% if not n.lida %}notif-unread{% endif %}">
+      <div class="notif-icon">
+        {% if n.nivel == 'critico' %}🔴
+        {% elif n.nivel == 'aviso' %}🟠
+        {% else %}🔵
+        {% endif %}
+      </div>
+      <div class="notif-body">
+        <div class="notif-header">
+          <span class="notif-title">{{ n.titulo }}</span>
+          <span class="notif-ts">{{ n.timestamp_fmt }}</span>
+        </div>
+        <div class="notif-message">{{ n.mensagem }}</div>
+        <div class="notif-meta">
+          <span class="badge badge-blue">{{ n.tipo }}</span>
+          {% if n.conta_id %}<span class="badge badge-blue">Conta #{{ n.conta_id }}</span>{% endif %}
+        </div>
+      </div>
+      <div class="notif-actions">
+        {% if not n.lida %}
+        <a href="{{ url_for('notificacao_lida', id=n._id) }}" class="btn btn-outline btn-sm">Marcar como lida</a>
+        {% endif %}
+        <a href="{{ url_for('notificacao_eliminar', id=n._id) }}"
+           class="btn btn-danger btn-sm"
+           onclick="return confirm('Eliminar esta notificação?')">Eliminar</a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty">
+      <div class="empty-icon">🔔</div>
+      <div class="empty-text">Nenhuma notificação para mostrar.</div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
